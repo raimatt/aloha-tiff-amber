@@ -13,7 +13,7 @@ export default function Navbar() {
                     <h1>
                         <NavLink
                             to="/"
-                            className="text-2xl font-light tracking-wide cursor-pointer md:text-3xl"
+                            className="text-lg sm:text-xl md:text-3xl font-light tracking-wide whitespace-nowrap"
                         >
                             Aloha, Tiff Amber
                         </NavLink>
