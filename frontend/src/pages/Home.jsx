@@ -24,8 +24,10 @@ export default function Home() {
 
     return (
         <div className="pt-18">
-            <div className="bg-yellow-100 p-6 text-center">
-                <p className="text-lg">🚧 Website under development - New features coming soon!</p>
+            <div className="bg-yellow-50 border border-yellow-200 px-6 py-6 text-center">
+                <p className="text-sm sm:text-base font-medium text-yellow-800">
+                    🚧 This site is currently in progress — new features coming soon.
+                </p>
             </div>
             <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
                 <img src={heroImage} alt="Aloha Tiff Amber jewelry collection" className="absolute inset-0 w-full h-full object-cover" />
