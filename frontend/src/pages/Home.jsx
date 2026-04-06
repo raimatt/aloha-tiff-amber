@@ -80,7 +80,7 @@ export default function Home() {
                     ))}
                 </div>
                 <div className="mt-12">
-                    <Link to="/products/:category"><button className="btn-outline">View All Pieces</button></Link>
+                    <Link to="/products/:category"><button className="btn-outline cursor-pointer">View All Pieces</button></Link>
                 </div>
             </section>
         </div>
