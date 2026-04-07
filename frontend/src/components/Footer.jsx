@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom'
+
+import instagramLogo from '../assets/ig-logo.svg'
+
 export default function Footer() {
     return (
         <div className="bg-(--foreground) text-(--background) px-6 py-16">
@@ -8,18 +12,28 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col">
                     <p className="text-label mb-4 opacity-70">QUICK LINKS</p>
-                    <ul className="space-y-3">
-                        <li className="text-body opacity-70 hover:opacity-100 cursor-pointer transition-opacity">Shop All</li>
-                        <li className="text-body opacity-70 hover:opacity-100 cursor-pointer transition-opacity">About</li>
-                        <li className="text-body opacity-70 hover:opacity-100 cursor-pointer transition-opacity">Contact</li>
-                    </ul>
+                    <div className="flex flex-col space-y-3">
+                        <Link to="/products/:category" className="text-body opacity-70 hover:opacity-100 cursor-pointer transition-opacity">Shop All</Link>
+                        <Link to="/about" className="text-body opacity-70 hover:opacity-100 cursor-pointer transition-opacity">About</Link>
+                        <Link to="/policy" className="text-body opacity-70 hover:opacity-100 cursor-pointer transition-opacity">Policy</Link>
+                    </div>
                 </div>
                 <div className="flex flex-col">
                     <p className="text-label mb-4 opacity-70">GET IN TOUCH</p>
-                    <ul className="space-y-3">
-                        <li className="text-body opacity-70">alohatiffamber@gmail.com</li>
-                        <li className="text-body opacity-70">Follow us on Instagram</li>
-                    </ul>
+                    <div className="flex items-center">
+                        <p className="text-body opacity-70">Follow us on Instagram</p>
+                        <a
+                            href="https://www.instagram.com/alohatiffamber/"
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            <img 
+                                src={instagramLogo} 
+                                alt="Instagram"
+                                className="w-12 h-12 opacity-70 hover:opacity-100 transition-opacity"
+                            />
+                        </a>
+                    </div>
                 </div>
             </div>
             <div className="divider-gold mt-12 mb-6 opacity-30"></div>
