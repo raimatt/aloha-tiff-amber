@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Products() {
     return (
-        <div className="pt-20">
+        <div>
             <div className="flex flex-col gap-12">
                 <div className="bg-yellow-50 border border-yellow-200 px-6 p-6 text-center">
                     <p className="text-sm sm:text-base font-medium text-yellow-800">

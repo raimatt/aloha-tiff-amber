@@ -4,7 +4,7 @@ import instagramLogo from '../assets/ig-logo.svg'
 
 export default function Footer() {
     return (
-        <div className="bg-(--foreground) text-(--background) px-6 py-16">
+        <div className="bg-(--foreground) text-(--background) px-6 py-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div>
                     <h1 className="font-display text-2xl font-light mb-4">Aloha, Tiff Amber</h1>
@@ -19,7 +19,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <p className="text-label mb-4 opacity-70">GET IN TOUCH</p>
+                    <p className="text-label opacity-70">GET IN TOUCH</p>
                     <div className="flex items-center">
                         <p className="text-body opacity-70">Follow us on Instagram</p>
                         <a

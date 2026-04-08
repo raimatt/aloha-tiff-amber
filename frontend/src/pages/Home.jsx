@@ -23,7 +23,7 @@ export default function Home() {
     )
 
     return (
-        <div className="pt-18">
+        <div>
             <div className="bg-yellow-50 border border-yellow-200 px-6 py-6 text-center">
                 <p className="text-sm sm:text-base font-medium text-yellow-800">
                     🚧 This site is currently in progress — new features coming soon.
@@ -49,7 +49,7 @@ export default function Home() {
                     </Link>
                 </div>
             </section>
-            <section className="flex flex-col items-center justify-center py-20">
+            <section className="flex flex-col items-center justify-center py-12">
                 <p className="text-label text-(--primary) mb-3">BROWSE BY</p>
                 <h1 className="heading-section text-(--foreground)">Categories</h1>
                 <div className="divider-gold mt-4 mb-12"></div>
@@ -62,7 +62,7 @@ export default function Home() {
                     <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>SETS</button></Link>
                 </div>
             </section>
-            <section className="flex flex-col bg-(--secondary)/50 items-center justify-center py-20 p-6">
+            <section className="flex flex-col bg-(--secondary)/50 items-center justify-center py-12 p-6">
                 <p className="text-label text-(--primary) mb-3">CURATED FOR YOU</p>
                 <h1 className="heading-section text-(--foreground)">Featured Pieces</h1>
                 <div className="divider-gold mt-4 mb-12"></div>

@@ -19,7 +19,7 @@ export default function Navbar() {
                         </NavLink>
                     </h1>
                 </li>
-                <div className="flex text-xs font-medium text-(--muted-foreground) gap-10 px-2">
+                <ul className="flex text-xs font-medium text-(--muted-foreground) gap-10 px-2">
                     <li>
                         <NavLink 
                             to="/"
@@ -76,10 +76,10 @@ export default function Navbar() {
                             POLICY
                         </NavLink>
                     </li>
-                    <button className="md:hidden" onClick={() => setIsOpen(prev => !prev)}>
-                        {isOpen ? <X className="text-black cursor-pointer"/> : <Menu className="text-black cursor-pointer"/>}
-                    </button>
-                </div>
+                </ul>
+                <button className="md:hidden" aria-label="Toggle Menu" onClick={() => setIsOpen(prev => !prev)}>
+                    {isOpen ? <X className="text-(--foreground) cursor-pointer"/> : <Menu className="text-(--foreground) cursor-pointer"/>}
+                </button>
             </ul>
             {isOpen && 
                 <div className="md:hidden flex items-center justify-center p-4 mt-4 text-xs font-medium text-(--muted-foreground) border-t border-(--border)/50">
