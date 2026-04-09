@@ -54,12 +54,12 @@ export default function Home() {
                 <h1 className="heading-section text-(--foreground)">Categories</h1>
                 <div className="divider-gold mt-4 mb-12"></div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>BRACELETS</button></Link>
-                    <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>NECKLACES</button></Link>
-                    <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>EARRINGS</button></Link>
-                    <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>RINGS</button></Link>
-                    <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>ANKLETS</button></Link>
-                    <Link to="/products/:category" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"><button>SETS</button></Link>
+                    <Link to="/products/bracelets" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)">BRACELETS</Link>
+                    <Link to="/products/necklaces" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)">NECKLACES</Link>
+                    <Link to="/products/earrings" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)">EARRINGS</Link>
+                    <Link to="/products/rings" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)">RINGS</Link>
+                    <Link to="/products/anklets" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)">ANKLETS</Link>
+                    <Link to="/products/sets" className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)">SETS</Link>
                 </div>
             </section>
             <section className="flex flex-col bg-(--secondary)/50 items-center justify-center py-12 p-6">
@@ -70,7 +70,7 @@ export default function Home() {
                     {products.map(product => (
                         <button className="card-product group" key={product._id}>
                             <div className="aspect-square overflow-hidden">
-                                <img className="w-full h-full transition-transform duration-700 group-hover:scale-105" src={product.images[0]} />
+                                <img className="w-full h-full duration-700 group-hover:scale-105" src={product.images[0]} />
                             </div>
                             <div className="p-4">
                                 <p className="heading-card text-(--foreground)">{product.name}</p>

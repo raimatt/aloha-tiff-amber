@@ -1,10 +1,13 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 import { Menu, X } from 'lucide-react'
 
 export default function Navbar() {
     const [ isOpen, setIsOpen ] = useState(false)
+
+    const location = useLocation()
+    const isShopActive = location.pathname.startsWith("/products")
 
     return (
         <nav className="fixed z-10 w-full px-6 py-4 border-b border-(--border)/50 bg-(--background)/80 backdrop-blur-md">
@@ -24,7 +27,7 @@ export default function Navbar() {
                         <NavLink 
                             to="/"
                             className={({ isActive }) => 
-                                `hidden md:flex tracking-widest transition-colors ${
+                                `hidden md:flex tracking-widest ${
                                     isActive 
                                     ? 'text-(--foreground) font-semibold' 
                                     : 'text-(--muted-foreground) hover:text-(--foreground)'
@@ -36,11 +39,10 @@ export default function Navbar() {
                     </li>
                     <li>
                         <NavLink 
-                            to="/products/:category"
-                            className={({ isActive }) => 
-                                `hidden md:flex tracking-widest transition-colors ${
-                                    isActive 
-                                    ? 'text-(--foreground) font-semibold' 
+                            to="/products/all"
+                            className={`hidden md:flex tracking-widest ${
+                                isShopActive
+                                    ? 'text-(--foreground) font-semibold'
                                     : 'text-(--muted-foreground) hover:text-(--foreground)'
                                 }`
                             }
@@ -52,7 +54,7 @@ export default function Navbar() {
                         <NavLink 
                             to="/about"
                             className={({ isActive }) => 
-                                `hidden md:flex tracking-widest transition-colors ${
+                                `hidden md:flex tracking-widest ${
                                     isActive 
                                     ? 'text-(--foreground) font-semibold' 
                                     : 'text-(--muted-foreground) hover:text-(--foreground)'
@@ -66,7 +68,7 @@ export default function Navbar() {
                         <NavLink 
                             to="/policy"
                             className={({ isActive }) => 
-                                `hidden md:flex tracking-widest transition-colors ${
+                                `hidden md:flex tracking-widest ${
                                     isActive 
                                     ? 'text-(--foreground) font-semibold' 
                                     : 'text-(--muted-foreground) hover:text-(--foreground)'
@@ -89,7 +91,7 @@ export default function Navbar() {
                                 to="/"
                                 onClick={() => setIsOpen(false)}
                                     className={({ isActive }) => 
-                                    `tracking-widest transition-colors ${
+                                    `tracking-widest ${
                                         isActive
                                         ? 'text-(--foreground) font-semibold' 
                                         : 'text-(--muted-foreground) hover:text-(--foreground)'
@@ -101,10 +103,10 @@ export default function Navbar() {
                         </li>
                         <li>
                             <NavLink 
-                                to="/products/:category"
+                                to="/products/all"
                                 onClick={() => setIsOpen(false)}
                                 className={({ isActive }) => 
-                                    `tracking-widest transition-colors ${
+                                    `tracking-widest ${
                                         isActive 
                                         ? 'text-(--foreground) font-semibold' 
                                         : 'text-(--muted-foreground) hover:text-(--foreground)'
@@ -119,7 +121,7 @@ export default function Navbar() {
                                 to="/about"
                                 onClick={() => setIsOpen(false)}
                                 className={({ isActive }) => 
-                                    `tracking-widest transition-colors ${
+                                    `tracking-widest ${
                                         isActive 
                                         ? 'text-(--foreground) font-semibold' 
                                         : 'text-(--muted-foreground) hover:text-(--foreground)'
@@ -134,7 +136,7 @@ export default function Navbar() {
                                 to="/policy"
                                 onClick={() => setIsOpen(false)}
                                 className={({ isActive }) => 
-                                    `tracking-widest transition-colors ${
+                                    `tracking-widest ${
                                         isActive 
                                         ? 'text-(--foreground) font-semibold' 
                                         : 'text-(--muted-foreground) hover:text-(--foreground)'
