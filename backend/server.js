@@ -20,6 +20,13 @@ app.get('/', (req, res) => {
   res.json({ message: 'Backend is working!' });
 });
 
+// Central error handler — anything asyncHandler forwards via next(err)
+// lands here so routes don't each repeat the same try/catch + 500 response.
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: err.message });
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

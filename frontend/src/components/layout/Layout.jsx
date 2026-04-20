@@ -1,5 +1,7 @@
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+// Navbar and Footer are siblings inside components/layout/, so they resolve
+// relative to this file rather than through the old src-root path.
+import Navbar from './Navbar'
+import Footer from './Footer'
 
 export default function Layout({ children }) {
   return (

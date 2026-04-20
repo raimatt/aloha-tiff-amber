@@ -19,6 +19,14 @@
     --font-body: 'Jost', sans-serif;
   }
   
+  /* Block accidental horizontal scroll on narrow viewports. The site has no
+     content intended to scroll horizontally; clamping the viewport here is a
+     safety net for any future element that briefly exceeds 100vw. */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
@@ -53,8 +61,13 @@
     @apply px-8 py-3 text-xs font-medium uppercase tracking-[0.15em] transition-all duration-300;
   }
 
+  /* Refined hover: bronze the gold with a touch of foreground (instead of a
+     loud color flip), lift the button 1px, and keep the warm-gold shadow —
+     three small cues stacked, on-brand for the luxury-refined tone. */
   .btn-primary:hover {
+    background-color: color-mix(in oklab, var(--primary) 85%, var(--foreground));
     box-shadow: var(--shadow-hover);
+    transform: translateY(-1px);
   }
 
   .heading-section {
@@ -78,19 +91,37 @@
     color: var(--background);
   }
 
+  /* Card uses the project's own --shadow-card/--shadow-hover tokens so the
+     card shadow stays on-palette. transition-all already animates box-shadow
+     on hover — no extra Tailwind shadow utility needed. */
   .card-product {
-    @apply bg-(--card)  overflow-hidden transition-all duration-500 cursor-pointer;
     box-shadow: var(--shadow-card);
-    @apply shadow-sm
+    @apply bg-(--card) overflow-hidden transition-all duration-500 cursor-pointer;
   }
 
   .card-product:hover {
     box-shadow: var(--shadow-hover);
-    @apply shadow-lg
   }
 
   .heading-card {
     font-family: var(--font-display);
     @apply text-xl font-medium;
+  }
+
+  /* Standard vertical rhythm for a page-level section block.
+     Used on Home's Categories and Featured Pieces rows so padding stays consistent. */
+  .section-page {
+    @apply flex flex-col items-center justify-center py-12 px-6;
+  }
+
+  /* Warm-gold "site in progress" banner. Uses design tokens (primary + background)
+     via color-mix so the notice sits inside the palette instead of the raw
+     yellow-50/yellow-800 system colors that used to clash with the brand. */
+  .banner-notice {
+    background-color: color-mix(in oklab, var(--primary) 12%, var(--background));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    color: var(--foreground);
+    @apply px-6 py-3 text-center text-xs font-medium tracking-wide;
   }
 }
