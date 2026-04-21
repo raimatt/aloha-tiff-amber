@@ -20,12 +20,7 @@ export default function Home() {
 
     return (
         <div>
-            {/* Palette-safe site notice — see .banner-notice in index.css. */}
-            <div className="banner-notice">
-                This site is currently in progress — new features coming soon.
-            </div>
-
-            <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+            <section className="relative h-[85vh] flex items-center justify-center overflow-hidden hero-grain">
                 <img
                     src={heroImage}
                     alt="Aloha Tiff Amber jewelry collection"
@@ -34,19 +29,24 @@ export default function Home() {
                 <div className="absolute inset-0 bg-(--foreground)/30"></div>
 
                 <div className="relative text-center text-(--background) px-4 sm:px-6">
-                    <p className="text-label mb-4 opacity-80">HANDCRAFTED WITH ALOHA</p>
+                    <div className="flex items-center justify-center gap-4 mb-4 animate-fade-up fade-delay-1">
+                        <div className="h-px w-8 bg-(--primary)"></div>
+                        <p className="text-label opacity-80">HANDCRAFTED WITH ALOHA</p>
+                        <div className="h-px w-8 bg-(--primary)"></div>
+                    </div>
 
-                    <h1 className="heading-hero text-3xl sm:text-5xl mb-6">
+                    <h1 className="heading-hero mb-6 animate-fade-up fade-delay-2">
                         Aloha, Tiff Amber
                     </h1>
 
-                    {/* Dropped the inline text-base override so .text-body's sizing wins,
-                        keeping body copy consistent with every other page. */}
-                    <p className="text-body max-w-xs sm:max-w-md mx-auto mb-8 opacity-90">
+                    <p className="text-body max-w-xs sm:max-w-md mx-auto mb-8 opacity-90 animate-fade-up fade-delay-3">
                         Island-inspired jewelry made with love. Delicate, golden, and uniquely yours.
                     </p>
 
-                    <Link className="btn-primary inline-block" to="/products/all">
+                    <Link
+                        className="btn-primary inline-block animate-fade-up fade-delay-4"
+                        to="/products/all"
+                    >
                         Shop Collection
                     </Link>
                 </div>
@@ -54,8 +54,6 @@ export default function Home() {
 
             <section className="section-page">
                 <SectionHeading eyebrow="BROWSE BY" title="Categories" />
-                {/* Category tiles come from the shared CATEGORIES constant so Home
-                    and Products never drift. One hover rule, one className chain. */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                     {CATEGORIES.map(({ name, path }) => (
                         <Link
@@ -73,8 +71,6 @@ export default function Home() {
                 <SectionHeading eyebrow="CURATED FOR YOU" title="Featured Pieces" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {products.map(product => (
-                        // Card is now a <Link> — real navigation, keyboard-focusable,
-                        // and no invalid <Link><button> nesting.
                         <Link
                             key={product._id}
                             to={`/product/${product._id}`}
@@ -95,9 +91,6 @@ export default function Home() {
                     ))}
                 </div>
                 <div className="mt-12">
-                    {/* Link styled as a button instead of <Link><button>…</button></Link>
-                        (which is invalid HTML). /products/all replaces the old literal
-                        ":category" placeholder that didn't route anywhere. */}
                     <Link to="/products/all" className="btn-outline inline-block">
                         View All Pieces
                     </Link>

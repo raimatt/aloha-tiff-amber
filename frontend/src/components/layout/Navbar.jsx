@@ -5,8 +5,6 @@ import { Menu, X } from 'lucide-react'
 
 import { NAV_LINKS } from '../../constants/navLinks'
 
-// Shared active/inactive styling for every nav link (desktop + mobile).
-// Kept as a function so both renders pass the same className logic in.
 const linkClass = (isActive) =>
     `text-label tracking-widest ${
         isActive
@@ -14,9 +12,6 @@ const linkClass = (isActive) =>
             : 'text-(--muted-foreground) hover:text-(--foreground)'
     }`
 
-// One row renderer, reused by the desktop list and the mobile dropdown.
-// `matchPrefix` lets SHOP stay highlighted on every /products/* child route;
-// for plain links we let NavLink compute isActive itself.
 function NavItem({ link, pathname, onClick }) {
     const { to, label, matchPrefix } = link
 
@@ -52,21 +47,17 @@ export default function Navbar() {
 
     return (
         <nav className="fixed z-10 w-full px-6 py-4 border-b border-(--border)/50 bg-(--background)/80 backdrop-blur-md">
-            <ul className="flex items-center justify-between">
-                <li>
-                    <h1>
-                        <NavLink
-                            to="/"
-                            className="text-lg sm:text-xl md:text-3xl font-light tracking-wide whitespace-nowrap"
-                        >
-                            Aloha, Tiff Amber
-                        </NavLink>
-                    </h1>
-                </li>
+            <div className="flex items-center justify-between">
+                <h1>
+                    <NavLink
+                        to="/"
+                        className="text-lg sm:text-xl md:text-3xl font-light tracking-wide whitespace-nowrap"
+                    >
+                        Aloha, Tiff Amber
+                    </NavLink>
+                </h1>
 
-                {/* Desktop links — the whole list hides on mobile, so the empty
-                    <li> wrappers don't sit in the row eating up horizontal space
-                    with their gap-10 between them. Mobile uses the dropdown below. */}
+                {/* Desktop links — the whole list hides on mobile. */}
                 <ul className="hidden md:flex gap-10 px-2">
                     {NAV_LINKS.map((link) => (
                         <NavItem key={link.to} link={link} pathname={pathname} />
@@ -82,7 +73,7 @@ export default function Navbar() {
                         ? <X className="text-(--foreground) cursor-pointer" />
                         : <Menu className="text-(--foreground) cursor-pointer" />}
                 </button>
-            </ul>
+            </div>
 
             {/* Mobile dropdown — same NAV_LINKS, closes menu on tap. */}
             {isOpen && (

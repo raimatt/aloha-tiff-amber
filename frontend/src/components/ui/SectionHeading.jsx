@@ -1,6 +1,3 @@
-// Section-level heading used inside Home's "Categories" and "Featured Pieces"
-// sections. Three parts stack: a small gold eyebrow label, the section title,
-// and the gold divider. Uses <h2> because this sits below Home's <h1>.
 export default function SectionHeading({ eyebrow, title }) {
     return (
         <div className="flex flex-col items-center">

@@ -8,20 +8,21 @@
     --primary: hsl(38 55% 55%);
     --primary-foreground: hsl(40 33% 97%);
     --secondary: hsl(30 20% 92%);
+    --secondary-foreground: hsl(30 10% 15%);
+    --muted: hsl(30 15% 95%);
     --muted-foreground: hsl(30 8% 50%);
     --border: hsl(35 20% 88%);
     --card: hsl(40 30% 99%);
-    
+
     --shadow-hover: 0 8px 40px -8px hsl(38 55% 55% / 0.2);
     --shadow-card: 0 4px 30px -8px hsl(30 10% 15% / 0.08);
 
     --font-display: 'Cormorant Garamond', serif;
     --font-body: 'Jost', sans-serif;
+
+    --nav-height: 4.5rem;
   }
-  
-  /* Block accidental horizontal scroll on narrow viewports. The site has no
-     content intended to scroll horizontally; clamping the viewport here is a
-     safety net for any future element that briefly exceeds 100vw. */
+
   html, body {
     overflow-x: hidden;
     max-width: 100%;
@@ -32,9 +33,15 @@
     color: var(--foreground);
     font-family: var(--font-body);
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
@@ -46,7 +53,7 @@
 
   .heading-hero {
     font-family: var(--font-display);
-    @apply text-5xl md:text-7xl font-light tracking-wide;
+    @apply text-4xl sm:text-5xl md:text-7xl font-light tracking-wide;
   }
 
   .text-body {
@@ -61,9 +68,6 @@
     @apply px-8 py-3 text-xs font-medium uppercase tracking-[0.15em] transition-all duration-300;
   }
 
-  /* Refined hover: bronze the gold with a touch of foreground (instead of a
-     loud color flip), lift the button 1px, and keep the warm-gold shadow —
-     three small cues stacked, on-brand for the luxury-refined tone. */
   .btn-primary:hover {
     background-color: color-mix(in oklab, var(--primary) 85%, var(--foreground));
     box-shadow: var(--shadow-hover);
@@ -91,12 +95,9 @@
     color: var(--background);
   }
 
-  /* Card uses the project's own --shadow-card/--shadow-hover tokens so the
-     card shadow stays on-palette. transition-all already animates box-shadow
-     on hover — no extra Tailwind shadow utility needed. */
   .card-product {
     box-shadow: var(--shadow-card);
-    @apply bg-(--card) overflow-hidden transition-all duration-500 cursor-pointer;
+    @apply bg-(--card) overflow-hidden transition-all duration-500;
   }
 
   .card-product:hover {
@@ -108,20 +109,72 @@
     @apply text-xl font-medium;
   }
 
-  /* Standard vertical rhythm for a page-level section block.
-     Used on Home's Categories and Featured Pieces rows so padding stays consistent. */
   .section-page {
     @apply flex flex-col items-center justify-center py-12 px-6;
   }
 
-  /* Warm-gold "site in progress" banner. Uses design tokens (primary + background)
-     via color-mix so the notice sits inside the palette instead of the raw
-     yellow-50/yellow-800 system colors that used to clash with the brand. */
   .banner-notice {
     background-color: color-mix(in oklab, var(--primary) 12%, var(--background));
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     color: var(--foreground);
     @apply px-6 py-3 text-center text-xs font-medium tracking-wide;
+  }
+
+  .pill {
+    font-family: var(--font-body);
+    @apply text-xs font-medium uppercase tracking-[0.15em] px-2 md:px-5 py-2 border transition duration-300;
+  }
+  .pill-active {
+    @apply border-(--primary) text-(--primary);
+  }
+  .pill-inactive {
+    border-color: var(--border);
+    color: var(--muted-foreground);
+    @apply transition-colors;
+  }
+  .pill-inactive:hover {
+    border-color: var(--foreground);
+    color: var(--foreground);
+  }
+
+  .link-muted {
+    @apply opacity-70 transition-opacity duration-300;
+  }
+  .link-muted:hover {
+    @apply opacity-100;
+  }
+}
+
+@layer utilities {
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    opacity: 0;
+    animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .fade-delay-1 { animation-delay: 0.1s; }
+  .fade-delay-2 { animation-delay: 0.3s; }
+  .fade-delay-3 { animation-delay: 0.5s; }
+  .fade-delay-4 { animation-delay: 0.7s; }
+
+  .hero-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   }
 }
