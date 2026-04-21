@@ -30,7 +30,7 @@ This application showcases a jewelry storefront where products are dynamically f
 
 ## 🌐 Live Demo
 
-- Frontend: https://aloha-tiff-amber.vercel.app/
+- Frontend: https://alohatiffamber.com
 - Backend API: https://aloha-tiff-amber.onrender.com  
 
 ---
