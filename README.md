@@ -1,48 +1,39 @@
 # 🌺 Aloha, Tiff Amber
 
-A modern, responsive jewelry website built with React and Express. The project focuses on clean UI, mobile-first design, and a simple full-stack architecture with a deployed frontend and backend.
+A production MERN e-commerce platform for a real jewelry business. Features a custom design system, JWT-secured admin dashboard, Cloudinary image uploads, and full product CRUD — deployed on Vercel and Render.
 
----
-
-## ✨ Overview
-
-This application showcases a jewelry storefront where products are dynamically fetched from a backend API. It is designed to be fast, responsive, and visually minimal while maintaining a polished user experience.
+**Live:** [alohatiffamber.com](https://alohatiffamber.com)
 
 ---
 
 ## 🚀 Tech Stack
 
 ### Frontend
-- React
+- React 19 + Vite
 - React Router
-- Tailwind CSS
-- Vite
+- Tailwind CSS 4 (custom design system)
 
 ### Backend
-- Node.js
-- Express
+- Node.js + Express 5
+- MongoDB + Mongoose
+- JWT + bcrypt (admin auth)
+- Cloudinary + multer (image uploads)
+- express-rate-limit
 
 ### Deployment
-- Frontend: Vercel  
-- Backend: Render  
-
----
-
-## 🌐 Live Demo
-
-- Frontend: https://aloha-tiff-amber.vercel.app/
-- Backend API: https://aloha-tiff-amber.onrender.com  
+- Frontend: Vercel
+- Backend: Render
 
 ---
 
 ## 📦 Features
 
-- Responsive, mobile-first design  
-- Dynamic product fetching from backend API  
-- Clean UI built with Tailwind CSS  
-- Client-side routing with React Router  
-- Separation of frontend and backend services  
-- Auto-deployment via GitHub integration  
+- 30+ products across 6 categories with dynamic fetching and category filtering
+- JWT-secured admin dashboard with full product CRUD (create, edit, delete)
+- Cloudinary image upload pipeline — admins upload photos, URLs stored in MongoDB
+- IP-based rate limiting and origin-restricted CORS on all API routes
+- Custom Tailwind CSS 4 design system with reusable component tokens and animations
+- Fully responsive mobile layout with accessible keyboard navigation
 
 ---
 
@@ -50,38 +41,19 @@ This application showcases a jewelry storefront where products are dynamically f
 
 ```
 aloha-tiff-amber/
-├── frontend/
-└── backend/
+├── frontend/   # React + Vite
+└── backend/    # Express + Mongoose
 ```
 
 ---
 
 ## ⚠️ Deployment Notes
 
-- The backend is hosted on Render (free tier)
-- Free instances may spin down after inactivity
-- This can result in:
-  - Slower initial load times
-  - Temporary request delays on first request
-
-This is expected behavior and not a bug.
+The backend runs on Render's free tier and may spin down after inactivity — the first request after a cold start can be slow. This is expected behavior.
 
 ---
 
-## 🔮 Future Improvements
+## 🔮 In Progress
 
-- Admin dashboard for managing products  
-- User authentication  
-- Product categories and filtering  
-- Image hosting optimization (Cloudinary or S3)  
-- Performance improvements and caching  
-
----
-
-## 💡 Key Learnings
-
-- Handling CORS between frontend and backend  
-- Managing environment variables across environments  
-- Working with deployed full-stack applications  
-- Handling backend cold starts on free-tier hosting  
-- Building responsive layouts with Tailwind CSS  
+- Admin dashboard frontend (login, product form, dashboard table)
+- Email request flow (Request button → admin notification + customer receipt)
