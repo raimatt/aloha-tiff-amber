@@ -106,7 +106,7 @@
 
   .heading-card {
     font-family: var(--font-display);
-    @apply text-xl font-medium;
+    @apply text-sm sm:text-xl font-medium;
   }
 
   .section-page {

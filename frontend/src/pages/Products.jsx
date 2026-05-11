@@ -1,5 +1,5 @@
 import { NavLink, useParams, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 import { CATEGORIES_WITH_ALL } from '../constants/categories'
 import PageHeading from '../components/ui/PageHeading'
@@ -10,6 +10,7 @@ export default function Products() {
     const [ products, setProducts ] = useState([])
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState(null)
+    const prevCount = useRef(4)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,10 +18,12 @@ export default function Products() {
             try {
                 if (category === "all") {
                     const data = await getAllProducts()
+                    prevCount.current = data.length
                     setProducts(data)
                     return
                 }
                 const data = await getProductsByCategory(category)
+                prevCount.current = data.length
                 setProducts(data)
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -52,11 +55,11 @@ export default function Products() {
 
             <section className="flex justify-center px-6 pb-12">
                 {loading ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-                        {Array.from({ length: 8 }).map((_, i) => (
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+                        {Array.from({ length: prevCount.current }).map((_, i) => (
                             <div key={i} className="card-product animate-pulse">
                                 <div className="aspect-square bg-stone-200" />
-                                <div className="p-4 flex flex-col gap-2">
+                                <div className="p-5 flex flex-col gap-2">
                                     <div className="h-4 bg-stone-200 rounded w-3/4" />
                                     <div className="h-3 bg-stone-200 rounded w-1/3" />
                                 </div>
@@ -68,7 +71,7 @@ export default function Products() {
                 ) : products.length === 0 ? (
                     <p className="text-body text-(--muted-foreground)">No products in this category yet.</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 w-full">
                         {products.map(product => (
                             <Link
                                 key={product._id}
@@ -82,9 +85,9 @@ export default function Products() {
                                         alt={product.name}
                                     />
                                 </div>
-                                <div className="p-4">
-                                    <p className="heading-card text-(--foreground)">{product.name}</p>
-                                    <p className="text-label text-(--muted-foreground) mt-1">${product.price}.00</p>
+                                <div className="p-5 flex flex-col gap-1">
+                                    <p className="heading-card text-(--foreground) truncate">{product.name}</p>
+                                    <p className="text-label text-(--primary)">${product.price}.00</p>
                                 </div>
                             </Link>
                         ))}

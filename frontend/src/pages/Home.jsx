@@ -69,7 +69,7 @@ export default function Home() {
 
             <section className="section-page bg-(--secondary)/50">
                 <SectionHeading eyebrow="CURATED FOR YOU" title="Featured Pieces" />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
                     {products.map(product => (
                         <Link
                             key={product._id}
@@ -83,9 +83,9 @@ export default function Home() {
                                     alt={product.name}
                                 />
                             </div>
-                            <div className="p-4">
-                                <p className="heading-card text-(--foreground)">{product.name}</p>
-                                <p className="text-label text-(--muted-foreground) mt-1">${product.price}.00</p>
+                            <div className="p-5 flex flex-col gap-1">
+                                <p className="heading-card text-(--foreground) truncate">{product.name}</p>
+                                <p className="text-label text-(--primary)">${product.price}.00</p>
                             </div>
                         </Link>
                     ))}
