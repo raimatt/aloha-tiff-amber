@@ -6,6 +6,7 @@ import { isLoggedIn, login } from "../services/auth";
 export default function AdminLogin() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
@@ -43,10 +44,17 @@ export default function AdminLogin() {
                                 setEmail(e.target.value)
                             }} className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1" />
                         </div>
-                        <div>
-                            <input type="password" required value={password} placeholder="Password" onChange={e => {
+                        <div className="relative">
+                            <input type={showPassword ? "text" : "password"} required value={password} placeholder="Password" onChange={e => {
                                 setPassword(e.target.value)
-                            }} className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1" />
+                            }} className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1 pr-16" />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(prev => !prev)}
+                                className="absolute right-0 bottom-1 text-xs text-(--muted-foreground) hover:text-(--foreground) cursor-pointer"
+                            >
+                                {showPassword ? "Hide" : "Show"}
+                            </button>
                         </div>
                         {error && <p className="text-sm text-red-600">{error}</p>}
                     </div>
