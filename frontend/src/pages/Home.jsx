@@ -5,26 +5,34 @@ import { getAllProducts } from '../services/api'
 import { CATEGORIES } from '../constants/categories'
 import SectionHeading from '../components/ui/SectionHeading'
 
-import heroImage from '../assets/hero-jewelry.jpg'
+import heroImage from '../assets/HeroImage.jpg'
 
 export default function Home() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
         async function fetchProducts() {
-            const data = await getAllProducts()
-            setProducts(data)
+            try {
+                const data = await getAllProducts()
+                const recent = [...data]
+                    .filter(p => p.inStock)
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0, 4)
+                setProducts(recent)
+            } catch (err) {
+                console.error("Error fetching products:", err)
+            }
         }
         fetchProducts()
     }, [])
 
     return (
         <div>
-            <section className="relative h-[85vh] flex items-center justify-center overflow-hidden hero-grain">
+            <section className="relative h-[55vh] sm:h-[85vh] flex items-center justify-center overflow-hidden hero-grain">
                 <img
                     src={heroImage}
                     alt="Aloha Tiff Amber jewelry collection"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-(--foreground)/30"></div>
 
@@ -40,7 +48,7 @@ export default function Home() {
                     </h1>
 
                     <p className="text-body max-w-xs sm:max-w-md mx-auto mb-8 opacity-90 animate-fade-up fade-delay-3">
-                        Island-inspired jewelry made with love. Delicate, golden, and uniquely yours.
+                        Handmade Tahitian pearl jewelry, crafted with love right here in Hawaii.
                     </p>
 
                     <Link
@@ -59,7 +67,7 @@ export default function Home() {
                         <Link
                             key={path}
                             to={`/products/${path}`}
-                            className="btn-outline text-center py-4 hover:border-(--primary) hover:text-(--primary)"
+                            className="btn-outline text-center py-4"
                         >
                             {name}
                         </Link>
@@ -85,7 +93,7 @@ export default function Home() {
                             </div>
                             <div className="p-5 flex flex-col gap-1">
                                 <p className="heading-card text-(--foreground) truncate">{product.name}</p>
-                                <p className="text-label text-(--primary)">${product.price}.00</p>
+                                <p className="text-label text-(--primary)">${product.price.toFixed(2)}</p>
                             </div>
                         </Link>
                     ))}

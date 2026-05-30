@@ -54,7 +54,7 @@ export default function ProductDetail() {
                         />
                         <div>
                             <h1 className="heading-section mb-2">{product.name}</h1>
-                            <p className="text-label mb-2">${product.price}.00</p>
+                            <p className="text-label mb-2">${product.price.toFixed(2)}</p>
                             <div className="divider-gold mb-4" />
                             <p className="text-body mb-4">{product.description}</p>
                             <div className="flex items-center gap-2 mb-4">
@@ -64,10 +64,10 @@ export default function ProductDetail() {
                                 </p>
                             </div>
                             <button
-                                className={`btn-primary w-full cursor-pointer ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`btn-primary w-full ${product.inStock ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}
                                 disabled={!product.inStock}
                             >
-                                Request
+                                {product.inStock ? 'Request' : 'Out of Stock'}
                             </button>
                         </div>
                     </div>

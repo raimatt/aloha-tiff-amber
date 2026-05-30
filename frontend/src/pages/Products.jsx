@@ -26,7 +26,7 @@ export default function Products() {
                 prevCount.current = data.length
                 setProducts(data)
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error)
                 setError(error)
             } finally {
                 setLoading(false)
@@ -76,18 +76,23 @@ export default function Products() {
                             <Link
                                 key={product._id}
                                 to={`/product/${product._id}`}
-                                className="card-product group block"
+                                className={`card-product group block ${!product.inStock ? 'opacity-50' : ''}`}
                             >
-                                <div className="aspect-square overflow-hidden">
+                                <div className="aspect-square overflow-hidden relative">
                                     <img
-                                        className="w-full h-full object-cover duration-700 group-hover:scale-105"
+                                        className={`w-full h-full object-cover duration-700 ${product.inStock ? 'group-hover:scale-105' : 'grayscale'}`}
                                         src={product.images[0]}
                                         alt={product.name}
                                     />
+                                    {!product.inStock && (
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-label bg-(--foreground) text-(--background) px-3 py-1">Out of Stock</span>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="p-5 flex flex-col gap-1">
                                     <p className="heading-card text-(--foreground) truncate">{product.name}</p>
-                                    <p className="text-label text-(--primary)">${product.price}.00</p>
+                                    <p className="text-label text-(--primary)">${product.price.toFixed(2)}</p>
                                 </div>
                             </Link>
                         ))}

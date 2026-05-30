@@ -5,7 +5,7 @@
   :root {
     --background: hsl(40 33% 97%);
     --foreground: hsl(30 10% 15%);
-    --primary: hsl(38 55% 55%);
+    --primary: hsl(180 100% 19%);
     --primary-foreground: hsl(40 33% 97%);
     --secondary: hsl(30 20% 92%);
     --secondary-foreground: hsl(30 10% 15%);
@@ -14,7 +14,7 @@
     --border: hsl(35 20% 88%);
     --card: hsl(40 30% 99%);
 
-    --shadow-hover: 0 8px 40px -8px hsl(38 55% 55% / 0.2);
+    --shadow-hover: 0 8px 40px -8px hsl(180 100% 19% / 0.2);
     --shadow-card: 0 4px 30px -8px hsl(30 10% 15% / 0.08);
 
     --font-display: 'Cormorant Garamond', serif;

@@ -8,7 +8,7 @@ export default function Footer() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div>
                     <h1 className="text-2xl font-light mb-4">Aloha, Tiff Amber</h1>
-                    <p className="text-body opacity-70">Handcrafted jewelry inspired by island life. Each piece is made with love and aloha spirit.</p>
+                    <p className="text-body opacity-70">Handmade Tahitian pearl jewelry inspired by island life. Each piece is one of a kind.</p>
                 </div>
                 <div className="flex flex-col">
                     <p className="text-label mb-4 opacity-70">QUICK LINKS</p>
