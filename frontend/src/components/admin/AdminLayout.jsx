@@ -16,12 +16,22 @@ export default function AdminLayout({ children }) {
                         <span className="text-xs font-medium tracking-[0.15em] uppercase px-3 py-1 rounded-full bg-(--primary) text-(--primary-foreground)">Admin</span>
                     </div>
 
-                    <button className="btn-outline text-center p-4 cursor-pointer" onClick={() => {
-                        logout()
-                        navigate("/admin/login")
-                    }}>
-                        Logout
-                    </button>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <a
+                            href="/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-outline text-center p-4 cursor-pointer whitespace-nowrap"
+                        >
+                            View Site ↗
+                        </a>
+                        <button className="btn-outline text-center p-4 cursor-pointer" onClick={() => {
+                            logout()
+                            navigate("/admin/login")
+                        }}>
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </div>
 

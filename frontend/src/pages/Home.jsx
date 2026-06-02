@@ -77,32 +77,50 @@ export default function Home() {
 
             <section className="section-page bg-(--secondary)/50">
                 <SectionHeading eyebrow="CURATED FOR YOU" title="Featured Pieces" />
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                    {products.map(product => (
-                        <Link
-                            key={product._id}
-                            to={`/product/${product._id}`}
-                            className="card-product group block"
+                {products.length === 0 ? (
+                    <div className="text-center max-w-md mx-auto py-8">
+                        <p className="text-body text-(--muted-foreground) mb-8">
+                            New pieces are on their way. Follow along on Instagram to be the first to see them.
+                        </p>
+                        <a
+                            href="https://instagram.com/alohatiffamber"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary inline-block"
                         >
-                            <div className="aspect-square overflow-hidden">
-                                <img
-                                    className="w-full h-full object-cover duration-700 group-hover:scale-105"
-                                    src={product.images[0]}
-                                    alt={product.name}
-                                />
-                            </div>
-                            <div className="p-5 flex flex-col gap-1">
-                                <p className="heading-card text-(--foreground) truncate">{product.name}</p>
-                                <p className="text-label text-(--primary)">${product.price.toFixed(2)}</p>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-                <div className="mt-12">
-                    <Link to="/products/all" className="btn-outline inline-block">
-                        View All Pieces
-                    </Link>
-                </div>
+                            Follow @alohatiffamber
+                        </a>
+                    </div>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                            {products.map(product => (
+                                <Link
+                                    key={product._id}
+                                    to={`/product/${product._id}`}
+                                    className="card-product group block"
+                                >
+                                    <div className="aspect-square overflow-hidden">
+                                        <img
+                                            className="w-full h-full object-cover duration-700 group-hover:scale-105"
+                                            src={product.images[0]}
+                                            alt={product.name}
+                                        />
+                                    </div>
+                                    <div className="p-5 flex flex-col gap-1">
+                                        <p className="heading-card text-(--foreground) truncate">{product.name}</p>
+                                        <p className="text-label text-(--primary)">${product.price.toFixed(2)}</p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                        <div className="mt-12">
+                            <Link to="/products/all" className="btn-outline inline-block">
+                                View All Pieces
+                            </Link>
+                        </div>
+                    </>
+                )}
             </section>
         </div>
     )

@@ -46,7 +46,11 @@ export default function AdminDashboard() {
                 <button className="btn-primary cursor-pointer" onClick={() => navigate("/admin/products/new")}>+ New Product</button>
             </div>
             {products.length === 0 ? (
-                <p className="text-body text-(--muted-foreground) text-center mt-12">No products yet.</p>
+                <div className="border border-dashed border-(--border) rounded-sm text-center px-6 py-16 mt-6">
+                    <p className="heading-section text-(--foreground) mb-2">No products yet</p>
+                    <p className="text-body text-(--muted-foreground) mb-8">Add your first piece to see it on the storefront.</p>
+                    <button className="btn-primary cursor-pointer" onClick={() => navigate("/admin/products/new")}>+ Add your first product</button>
+                </div>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-200 text-xs sm:text-sm">
