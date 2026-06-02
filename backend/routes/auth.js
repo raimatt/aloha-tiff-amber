@@ -11,9 +11,9 @@ const loginLimiter = rateLimit({
 })
 
 router.post('/login', loginLimiter, async (req, res) => {
-    const { email, password } = req.body
+    const { username, password } = req.body
 
-    if (email !== process.env.ADMIN_EMAIL) {
+    if (username !== process.env.ADMIN_USERNAME) {
         return res.status(401).json({ message: 'Invalid credentials' })
     }
 
@@ -22,7 +22,7 @@ router.post('/login', loginLimiter, async (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials' })
     }
 
-    const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '8h' })
+    const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '8h' })
     res.json({ token })
 })
 

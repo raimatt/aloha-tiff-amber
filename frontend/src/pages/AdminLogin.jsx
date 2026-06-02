@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { isLoggedIn, login } from "../services/auth";
 
 export default function AdminLogin() {
-    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState(null)
@@ -24,7 +24,7 @@ export default function AdminLogin() {
                     e.preventDefault()
                     setError(null)
 
-                    const credentials = {email, password}
+                    const credentials = {username, password}
 
                     setLoading(true)
 
@@ -40,8 +40,8 @@ export default function AdminLogin() {
                 }}>
                     <div className="flex flex-col gap-6 mb-12">
                         <div>
-                            <input type="text" required value={email} placeholder="Email" onChange={e => {
-                                setEmail(e.target.value)
+                            <input type="text" required value={username} placeholder="Username" onChange={e => {
+                                setUsername(e.target.value)
                             }} className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1" />
                         </div>
                         <div className="relative">
