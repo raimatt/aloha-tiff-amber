@@ -5,7 +5,7 @@ import { getAllProducts } from '../services/api'
 import { CATEGORIES } from '../constants/categories'
 import SectionHeading from '../components/ui/SectionHeading'
 
-import heroImage from '../assets/HeroImage.jpg'
+import heroImage from '../assets/HeroImage.jpeg'
 
 export default function Home() {
     const [products, setProducts] = useState([])
