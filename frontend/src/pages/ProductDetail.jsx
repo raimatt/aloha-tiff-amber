@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 
 import { getProductById } from '../services/api'
 
 export default function ProductDetail() {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [ product, setProduct ] = useState(null)
     const [ loading, setLoading ] = useState(true)
     const [ error, setError ] = useState(null)
@@ -27,6 +29,12 @@ export default function ProductDetail() {
 
     return (
         <div className="flex flex-col gap-12 mt-6 md:mt-10">
+            <button
+                onClick={() => navigate(-1)}
+                className="text-label text-(--muted-foreground) hover:text-(--foreground) transition-colors cursor-pointer flex items-center gap-2 px-6"
+            >
+                <ArrowLeft className="w-4 h-4" /> Back
+            </button>
             <section>
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 px-6 pb-12 animate-pulse">
