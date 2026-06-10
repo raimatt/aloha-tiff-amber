@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 
 import { getProductById } from '../services/api'
+import RequestModal from '../components/product/RequestModal'
 
 export default function ProductDetail() {
     const { id } = useParams()
@@ -10,6 +11,7 @@ export default function ProductDetail() {
     const [ product, setProduct ] = useState(null)
     const [ loading, setLoading ] = useState(true)
     const [ error, setError ] = useState(null)
+    const [ isModalOpen, setIsModalOpen ] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -72,6 +74,7 @@ export default function ProductDetail() {
                                 </p>
                             </div>
                             <button
+                                onClick={() => setIsModalOpen(true)}
                                 className={`btn-primary w-full ${product.inStock ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}
                                 disabled={!product.inStock}
                             >
@@ -81,6 +84,10 @@ export default function ProductDetail() {
                     </div>
                 )}
             </section>
+
+            {isModalOpen && (
+                <RequestModal product={product} onClose={() => setIsModalOpen(false)} />
+            )}
         </div>
     )
 }
