@@ -18,6 +18,9 @@ export default function RequestModal({ product, onClose }) {
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
 
+    // Hidden honeypot: real users never see or fill this, bots usually do.
+    const [honeypot, setHoneypot] = useState("")
+
     useEffect(() => {
         const onKeyDown = (e) => {
             if (e.key === "Escape") onClose()
@@ -33,6 +36,12 @@ export default function RequestModal({ product, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError(null)
+
+        // Honeypot tripped: almost certainly a bot. Fake success, send nothing.
+        if (honeypot) {
+            setSuccess(true)
+            return
+        }
 
         if (!name.trim()) {
             setError("Please enter your name.")
@@ -69,6 +78,7 @@ export default function RequestModal({ product, onClose }) {
                 }),
                 Message: message.trim() || "(none)",
                 "Product link": window.location.href,
+                _honey: honeypot,
             }
 
             if (email.trim()) {
@@ -137,6 +147,19 @@ export default function RequestModal({ product, onClose }) {
                         <div className="divider-gold mt-4 mb-8" />
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                            <div aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>
+                                <label>
+                                    Leave this field empty
+                                    <input
+                                        type="text"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        value={honeypot}
+                                        onChange={(e) => setHoneypot(e.target.value)}
+                                    />
+                                </label>
+                            </div>
+
                             <div className="flex flex-col gap-1">
                                 <label className="text-label text-(--muted-foreground)">Quantity</label>
                                 <div className="flex items-center border border-(--border) rounded-sm w-fit">
@@ -151,7 +174,7 @@ export default function RequestModal({ product, onClose }) {
                                     <span className="px-4 py-1 min-w-10 text-center text-body text-(--foreground)">{quantity}</span>
                                     <button
                                         type="button"
-                                        onClick={() => setQuantity((q) => q + 1)}
+                                        onClick={() => setQuantity((q) => Math.min(99, q + 1))}
                                         aria-label="Increase quantity"
                                         className="px-4 py-1 text-(--muted-foreground) hover:text-(--foreground) cursor-pointer"
                                     >
@@ -167,6 +190,7 @@ export default function RequestModal({ product, onClose }) {
                                     required
                                     value={name}
                                     placeholder="Your name"
+                                    maxLength={100}
                                     onChange={(e) => setName(e.target.value)}
                                     className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1"
                                 />
@@ -178,6 +202,7 @@ export default function RequestModal({ product, onClose }) {
                                     type="email"
                                     value={email}
                                     placeholder="you@email.com"
+                                    maxLength={254}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1"
                                 />
@@ -191,6 +216,7 @@ export default function RequestModal({ product, onClose }) {
                                         type="text"
                                         value={instagram}
                                         placeholder="yourhandle"
+                                        maxLength={30}
                                         onChange={(e) => setInstagram(e.target.value.replace(/@/g, ""))}
                                         className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1 pl-5"
                                     />
@@ -202,6 +228,7 @@ export default function RequestModal({ product, onClose }) {
                                 <textarea
                                     value={message}
                                     rows={3}
+                                    maxLength={1000}
                                     placeholder="Anything you'd like Tiff to know"
                                     onChange={(e) => setMessage(e.target.value)}
                                     className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1 resize-none"
