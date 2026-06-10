@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { ArrowLeftRight } from "lucide-react"
 
 import { getAllProducts, deleteProduct } from "../services/api"
 
@@ -52,6 +53,12 @@ export default function AdminDashboard() {
                     <button className="btn-primary cursor-pointer" onClick={() => navigate("/admin/products/new")}>+ Add your first product</button>
                 </div>
             ) : (
+                <>
+                {/* iOS hides the scrollbar; this hint shows only where the table overflows. */}
+                <p className="text-xs text-(--muted-foreground) mb-3 lg:hidden flex items-center gap-1.5">
+                    <ArrowLeftRight className="w-3.5 h-3.5" />
+                    Swipe to see more
+                </p>
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-200 text-xs sm:text-sm">
                         <thead>
@@ -97,6 +104,7 @@ export default function AdminDashboard() {
                         </tbody>
                     </table>
                 </div>
+                </>
             )}
         </div>
     )

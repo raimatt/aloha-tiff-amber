@@ -12,6 +12,8 @@ export default function RequestModal({ product, onClose }) {
     const [message, setMessage] = useState("")
     const [quantity, setQuantity] = useState(1)
 
+    // One modal, two modes: in-stock request (quantity/total) vs out-of-stock question.
+    const inStock = product.inStock
     const total = product.price * quantity
 
     const [loading, setLoading] = useState(false)
@@ -60,13 +62,17 @@ export default function RequestModal({ product, onClose }) {
         try {
             const handle = instagram.trim()
             const payload = {
-                _subject: `New request: ${product.name}`,
+                _subject: inStock
+                    ? `New request: ${product.name}`
+                    : `Availability question: ${product.name}`,
                 _template: "table",
                 _captcha: "false",
                 Product: product.name,
                 Price: `$${product.price.toFixed(2)}`,
-                Quantity: quantity,
-                Total: `$${total.toFixed(2)}`,
+                // Tell Tiff which kind of message this is, and only attach
+                // quantity/total for an actual in-stock request.
+                Availability: inStock ? "In stock" : "Out of stock",
+                ...(inStock && { Quantity: quantity, Total: `$${total.toFixed(2)}` }),
                 Name: name.trim(),
                 // Lowercase `email` is FormSubmit's special field: it both prints in
                 // the table and sets the auto-reply target. Only sent when provided.
@@ -131,7 +137,7 @@ export default function RequestModal({ product, onClose }) {
 
                 {success ? (
                     <div className="text-center py-6">
-                        <h2 className="heading-section text-(--foreground)">Request sent</h2>
+                        <h2 className="heading-section text-(--foreground)">{inStock ? "Request sent" : "Message sent"}</h2>
                         <div className="divider-gold mt-4 mb-6" />
                         <p className="text-body text-(--muted-foreground) mb-8">
                             Thank you. Tiff will reach out to you soon about <span className="text-(--foreground)">{product.name}</span>.
@@ -142,8 +148,16 @@ export default function RequestModal({ product, onClose }) {
                     </div>
                 ) : (
                     <>
-                        <h2 className="heading-section text-(--foreground) text-center">Request this piece</h2>
+                        <h2 className="heading-section text-(--foreground) text-center">
+                            {inStock ? "Request this piece" : "Ask about this piece"}
+                        </h2>
                         <p className="text-label text-(--muted-foreground) text-center mt-2">{product.name}</p>
+                        {/* For an out-of-stock piece, set expectations up front. */}
+                        {!inStock && (
+                            <p className="text-body text-(--muted-foreground) text-center mt-3">
+                                This piece is currently out of stock. Ask Tiff when it might return, or anything else.
+                            </p>
+                        )}
                         <div className="divider-gold mt-4 mb-8" />
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -160,28 +174,31 @@ export default function RequestModal({ product, onClose }) {
                                 </label>
                             </div>
 
-                            <div className="flex flex-col gap-1">
-                                <label className="text-label text-(--muted-foreground)">Quantity</label>
-                                <div className="flex items-center border border-(--border) rounded-sm w-fit">
-                                    <button
-                                        type="button"
-                                        onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                                        aria-label="Decrease quantity"
-                                        className="px-4 py-1 text-(--muted-foreground) hover:text-(--foreground) cursor-pointer"
-                                    >
-                                        −
-                                    </button>
-                                    <span className="px-4 py-1 min-w-10 text-center text-body text-(--foreground)">{quantity}</span>
-                                    <button
-                                        type="button"
-                                        onClick={() => setQuantity((q) => Math.min(99, q + 1))}
-                                        aria-label="Increase quantity"
-                                        className="px-4 py-1 text-(--muted-foreground) hover:text-(--foreground) cursor-pointer"
-                                    >
-                                        +
-                                    </button>
+                            {/* Quantity only matters for an in-stock request. */}
+                            {inStock && (
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-label text-(--muted-foreground)">Quantity</label>
+                                    <div className="flex items-center border border-(--border) rounded-sm w-fit">
+                                        <button
+                                            type="button"
+                                            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                                            aria-label="Decrease quantity"
+                                            className="px-4 py-1 text-(--muted-foreground) hover:text-(--foreground) cursor-pointer"
+                                        >
+                                            −
+                                        </button>
+                                        <span className="px-4 py-1 min-w-10 text-center text-body text-(--foreground)">{quantity}</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                                            aria-label="Increase quantity"
+                                            className="px-4 py-1 text-(--muted-foreground) hover:text-(--foreground) cursor-pointer"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             <div className="flex flex-col gap-1">
                                 <label className="text-label text-(--muted-foreground)">Name</label>
@@ -224,21 +241,26 @@ export default function RequestModal({ product, onClose }) {
                             </div>
 
                             <div className="flex flex-col gap-1">
-                                <label className="text-label text-(--muted-foreground)">Message (optional)</label>
+                                <label className="text-label text-(--muted-foreground)">
+                                    {inStock ? "Message (optional)" : "Your question"}
+                                </label>
                                 <textarea
                                     value={message}
                                     rows={3}
                                     maxLength={1000}
-                                    placeholder="Anything you'd like Tiff to know"
+                                    placeholder={inStock ? "Anything you'd like Tiff to know" : "e.g. When will this be back in stock?"}
                                     onChange={(e) => setMessage(e.target.value)}
                                     className="w-full border-b border-(--border) bg-transparent focus:outline-none pb-1 resize-none"
                                 />
                             </div>
 
-                            <div className="flex items-center justify-between border-t border-(--border) pt-4">
-                                <span className="text-label text-(--muted-foreground)">Total</span>
-                                <span className="text-(--foreground) font-medium text-base">${total.toFixed(2)}</span>
-                            </div>
+                            {/* Total is only meaningful for an in-stock request. */}
+                            {inStock && (
+                                <div className="flex items-center justify-between border-t border-(--border) pt-4">
+                                    <span className="text-label text-(--muted-foreground)">Total</span>
+                                    <span className="text-(--foreground) font-medium text-base">${total.toFixed(2)}</span>
+                                </div>
+                            )}
 
                             {error && <p className="text-sm text-red-600">{error}</p>}
 
@@ -247,7 +269,7 @@ export default function RequestModal({ product, onClose }) {
                                 disabled={loading}
                                 className={`btn-primary w-full ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                             >
-                                {loading ? "Sending..." : "Send Request"}
+                                {loading ? "Sending..." : inStock ? "Send Request" : "Send Question"}
                             </button>
                         </form>
                     </>

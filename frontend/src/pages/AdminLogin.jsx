@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-import { isLoggedIn, login } from "../services/auth";
+import { isLoggedIn, login, wasSessionExpired } from "../services/auth";
 
 export default function AdminLogin() {
     const [username, setUsername] = useState("")
@@ -9,6 +9,8 @@ export default function AdminLogin() {
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+    // Read once at mount (non-destructive); the flag is cleared on login/logout.
+    const [sessionExpired] = useState(wasSessionExpired)
     const navigate = useNavigate()
 
     if (isLoggedIn()) {
@@ -20,6 +22,11 @@ export default function AdminLogin() {
             <div className="w-full max-w-md p-8 bg-(--card) border border-(--border) rounded-sm shadow-sm">
                 <h1 className="heading-section text-(--foreground) text-center">Sign In</h1>
                 <div className="divider-gold mt-4 mb-12"></div>
+                {sessionExpired && (
+                    <p className="text-sm text-(--muted-foreground) text-center mb-8">
+                        Your session expired. Please sign in again.
+                    </p>
+                )}
                 <form onSubmit={async (e) => {
                     e.preventDefault()
                     setError(null)

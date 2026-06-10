@@ -4,6 +4,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import { createProduct, getProductById, updateProduct, uploadImage } from "../services/api"
 import { CATEGORIES } from "../constants/categories"
 
+// Max images per product.
+const MAX_IMAGES = 6
+
 export default function AdminProductForm() {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -58,7 +61,8 @@ export default function AdminProductForm() {
             }
             navigate("/admin")
         } catch (err) {
-            setError(err)
+            // On an expired session we're redirecting to login; don't flash an error.
+            if (err.code !== "SESSION_EXPIRED") setError(err)
         } finally {
             setSubmitting(false)
         }
@@ -67,12 +71,17 @@ export default function AdminProductForm() {
     const handleImageUpload = async (e) => {
         const file = e.target.files[0]
         if (!file) return
+        // Guard in case the limit is hit (the Add button also hides at max).
+        if (imageUrls.length >= MAX_IMAGES) {
+            e.target.value = ""
+            return
+        }
         setUploading(true)
         try {
             const url = await uploadImage(file)
             setImageUrls(prev => [...prev, url])
         } catch (err) {
-            setError(err)
+            if (err.code !== "SESSION_EXPIRED") setError(err)
         } finally {
             setUploading(false)
             e.target.value = ""
@@ -161,7 +170,7 @@ export default function AdminProductForm() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <label className="text-label text-(--muted-foreground)">Images</label>
+                    <label className="text-label text-(--muted-foreground)">Images ({imageUrls.length}/{MAX_IMAGES})</label>
                     {imageUrls.length > 0 && (
                         <div className="flex flex-wrap gap-3">
                             {imageUrls.map((url, i) => (
@@ -183,14 +192,18 @@ export default function AdminProductForm() {
                         className="hidden"
                         onChange={handleImageUpload}
                     />
-                    <button
-                        type="button"
-                        disabled={uploading}
-                        onClick={() => fileInputRef.current.click()}
-                        className={`btn-outline self-start ${uploading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-                    >
-                        {uploading ? "Uploading…" : "Add Image"}
-                    </button>
+                    {imageUrls.length >= MAX_IMAGES ? (
+                        <p className="text-xs text-(--muted-foreground)">Maximum of {MAX_IMAGES} images reached.</p>
+                    ) : (
+                        <button
+                            type="button"
+                            disabled={uploading}
+                            onClick={() => fileInputRef.current.click()}
+                            className={`btn-outline self-start ${uploading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                        >
+                            {uploading ? "Uploading…" : "Add Image"}
+                        </button>
+                    )}
                 </div>
 
                 <div className="flex items-center gap-4 pt-4 border-t border-(--border)">

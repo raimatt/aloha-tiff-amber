@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 
 import { getProductById } from '../services/api'
 import RequestModal from '../components/product/RequestModal'
+import ProductGallery from '../components/product/ProductGallery'
 
 export default function ProductDetail() {
     const { id } = useParams()
@@ -57,11 +58,7 @@ export default function ProductDetail() {
                     </div>
                 ) : (
                     <div className="flex flex-col md:flex-row gap-8 px-6 pb-12 items-start justify-center">
-                        <img
-                            src={product.images[0]}
-                            alt={product.name}
-                            className="w-full md:w-auto md:max-w-sm lg:max-w-md aspect-square object-cover rounded-sm shrink-0"
-                        />
+                        <ProductGallery images={product.images} name={product.name} />
                         <div>
                             <h1 className="heading-section mb-2">{product.name}</h1>
                             <p className="text-label mb-2">${product.price.toFixed(2)}</p>
@@ -75,10 +72,9 @@ export default function ProductDetail() {
                             </div>
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className={`btn-primary w-full ${product.inStock ? 'cursor-pointer' : 'opacity-50 cursor-not-allowed'}`}
-                                disabled={!product.inStock}
+                                className={`w-full cursor-pointer ${product.inStock ? 'btn-primary' : 'btn-outline'}`}
                             >
-                                {product.inStock ? 'Request' : 'Out of Stock'}
+                                {product.inStock ? 'Request' : 'Ask About Availability'}
                             </button>
                         </div>
                     </div>
