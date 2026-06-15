@@ -1,6 +1,6 @@
 # 🌺 Aloha, Tiff Amber
 
-A production MERN e-commerce platform for a real jewelry business. Features a custom design system, JWT-secured admin dashboard, Cloudinary image uploads, and full product CRUD — deployed on Vercel and Render.
+A production MERN e-commerce platform for a real jewelry business. Customers browse handmade Tahitian pearl jewelry and send purchase or availability requests (the site has no checkout), while the owner manages inventory through a JWT-secured admin dashboard. Features a custom design system, Cloudinary image uploads, and full product CRUD — deployed on Vercel and Render.
 
 **Live:** [alohatiffamber.com](https://alohatiffamber.com)
 
@@ -12,6 +12,7 @@ A production MERN e-commerce platform for a real jewelry business. Features a cu
 - React 19 + Vite
 - React Router
 - Tailwind CSS 4 (custom design system)
+- FormSubmit (customer request emails)
 
 ### Backend
 - Node.js + Express 5
@@ -28,12 +29,14 @@ A production MERN e-commerce platform for a real jewelry business. Features a cu
 
 ## 📦 Features
 
+- **Customer request flow** (lead capture in place of checkout): a validated modal form with live quantity/price totals, honeypot spam protection, and automated email confirmations to both owner and customer via FormSubmit
+- **Out-of-stock inquiry path** — out-of-stock pieces stay requestable with a dedicated "ask about availability" form
+- **Multi-image product gallery** — up to 6 images per product, with thumbnail navigation on the storefront
 - 30+ products across 6 categories with dynamic fetching and category filtering
-- JWT-secured admin dashboard with full product CRUD (create, edit, delete)
-- Cloudinary image upload pipeline — admins upload photos, URLs stored in MongoDB
-- IP-based rate limiting and origin-restricted CORS on all API routes
-- Custom Tailwind CSS 4 design system with reusable component tokens and animations
-- Fully responsive mobile layout with accessible keyboard navigation
+- **JWT-secured admin dashboard** with full product CRUD and multi-image Cloudinary uploads
+- **Session-expiry handling** — admins are automatically logged out and prompted to sign in again when their token expires
+- IP-based rate limiting and origin-restricted CORS on API routes
+- Custom Tailwind CSS 4 design system with reusable tokens, animations, and a responsive, accessible layout
 
 ---
 
@@ -47,13 +50,7 @@ aloha-tiff-amber/
 
 ---
 
-## ⚠️ Deployment Notes
+## 🔮 Roadmap
 
-The backend runs on Render's free tier and may spin down after inactivity — the first request after a cold start can be slow. This is expected behavior.
-
----
-
-## 🔮 In Progress
-
-- Admin dashboard frontend (login, product form, dashboard table)
-- Email request flow (Request button → admin notification + customer receipt)
+- **Self-hosted email flow** — replace the FormSubmit relay with a Nodemailer + Gmail backend route for branded admin notifications and customer receipts
+- Order/request history view for the admin dashboard
